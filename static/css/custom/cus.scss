@@ -1,0 +1,2089 @@
+//
+// accordion.scss
+// Extended from Bootstrap
+//
+
+//
+// Bootstrap Overrides
+//
+.accordion .accordion-button{
+  text-align: left;
+}
+
+//
+// Additional style for theme
+// 
+
+// Accordion collapse plus/minus icon
+.accordion{
+  .accordion-item {
+    color: $accordion-color;
+  }
+  &.accordion-icon{
+    .accordion-header{
+      position: relative;
+      .accordion-button{
+        background: transparent;
+        font-size: inherit;
+        border: none;
+        padding-right: 2rem;
+        &:after {
+          content:"";
+          background: var(--#{$prefix}gray-800) !important;
+          width: 10px;
+          height: 2px;
+          display: block;
+          position: absolute;
+          top: 47%;
+          right: 20px;
+          transform: translateY(-50%);
+          transition: $transition-base;
+          transform: rotateZ(0deg);
+          z-index: 9;
+        }
+        &:before {
+          content:"";
+          background: var(--#{$prefix}gray-800) !important;
+          width: 10px;
+          height: 2px;
+          display: block;
+          position: absolute;
+          top: 47%;
+          right: 20px;
+          transform: translateY(-50%);
+          transition: $transition-base;
+          transform: rotateZ(0deg);
+          z-index: 9;
+        }
+        &[aria-expanded=false]:after {
+          transform: rotateZ(90deg);
+        }
+        &[aria-expanded=true]:before {
+          transform: rotateZ(0deg);
+        }
+      }
+    }
+    .accordion-collapse{
+      border: none;
+    }
+    .accordion-body {
+      padding: 0.2rem 1rem 0.5rem 1rem;
+    }
+  }
+}
+
+// Accordion icon bg light
+.accordion.accordion-bg-light {
+  .accordion-item {
+    border: none;
+    background-color: transparent;
+  }
+  .accordion-button {
+    background-color: var(--#{$prefix}light)!important;
+    color: var(--#{$prefix}gray-800) !important;
+    &:not(.collapsed) {
+      box-shadow: none !important;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .accordion-icon .accordion-body {
+    padding: 0.6rem 0.5rem 0.5rem 0.5rem !important;
+  }
+  .accordion-header .accordion-button {
+    padding-left: 1.3rem !important;
+  }
+}
+
+
+// 
+// badge.scss
+// Extended from Bootstrap
+// 
+
+// 
+// Additional style for theme
+//
+a.badge{
+  &:hover{
+    color: $white;
+  }
+}
+
+
+// 
+// breadcrumb.scss
+// Extended from Bootstrap
+// 
+
+// 
+// Bootstrap Overrides
+//
+.breadcrumb-item {
+  a {
+    color: $body-color;
+    &:hover {
+      color: var(--#{$prefix}primary);
+    }
+  }
+}
+
+// 
+// Additional style for theme
+// 
+.breadcrumb.breadcrumb-dark {
+  .breadcrumb-item {
+    a {
+      color:var(--#{$prefix}gray-300);
+      &:hover {
+        color: var(--#{$prefix}primary);
+      }
+    }
+    &.active{
+      color: var(--#{$prefix}gray-400);
+    }
+  }
+ 
+}
+
+.breadcrumb.breadcrumb-dots {
+  .breadcrumb-item {
+    + .breadcrumb-item {
+      &::before {
+        content: "•";
+        font-size: 22px;
+        line-height: 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}
+
+
+// 
+// buttons.scss
+// Extended from Bootstrap
+// 
+
+// 
+// Additional styles for theme
+// 
+
+.btn {
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  outline: 0;
+  margin-bottom: 6px;
+}
+.input-group .btn{
+  margin-bottom: 0;
+}
+.btn-xs{
+  padding: 0.4rem 0.6rem;
+  font-size: 0.6rem;
+  line-height: 1.2;
+  border-radius: $btn-border-radius-sm;
+}
+
+// button light
+.btn-light {
+  background: var(--#{$prefix}light);
+  border-color: var(--#{$prefix}light);
+  color: var(--#{$prefix}gray-900);
+  &.active, &:active, &:focus, &:hover {
+    background: var(--#{$prefix}gray-200);
+    border-color: var(--#{$prefix}gray-200);
+    color: var(--#{$prefix}gray-900);
+  }
+}
+
+// button white
+.btn-white {
+  background: $white;
+  color: $gray-800;
+  &.active, &:active, &:focus, &:hover {
+    background: $gray-200;
+    color: $gray-800;
+    border-color:  $gray-200;
+  }
+}
+.btn-outline-white {
+  background: transparent;
+  border-color: $white;
+  color: $white;
+  &.active, &:active, &:focus, &:hover {
+    color: $gray-800;
+    background: $white;
+  }
+}
+
+.btn-outline-light{
+  background: transparent;
+  border-color: $gray-400;
+  color: $body-color;
+	&:active, &:hover, &:focus{
+		background: $gray-300;
+		border-color: $gray-300;
+		color: $gray-800;
+	}
+}
+.btn-check:checked + .btn-outline-light{
+  background: $gray-400;
+  border-color: $gray-400;
+  color: $gray-800;
+}
+
+// button round
+.btn-round{
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  padding: 0;
+  text-align: center;
+  i{
+    margin:0; 
+  }
+  // Quick fix for play button centered
+  .fa-play{
+    padding-left: 3px;
+  }
+  &.btn-lg{
+    height: 55px;
+    width: 55px;
+    line-height: 55px;
+  }
+  &.btn-sm{
+    height: 32px;
+    width: 32px;
+    line-height: 30px;
+    i{
+      font-size: .6rem;
+    }
+  }
+  &.btn-xs{
+    height: 25px;
+    width: 25px;
+    line-height: 24px;
+    i{
+      font-size: .6rem;
+    }
+  }
+}
+
+// Quick fix for play button centered in RTL
+/*rtl:raw:
+.btn-round .fa-play{
+  padding-left: 3px;
+  padding-right: 0;
+}
+*/
+
+// button soft
+@mixin button-soft-variant($color, $soft-background: rgba($color, .1)) {
+  color: $color;
+  background-color: $soft-background;
+  &:active, &:hover, &:focus {
+    color: color-contrast($color);
+    background-color: $color;
+    border-color: $color; 
+  }
+}
+@each $color, $value in $theme-colors {
+  .btn-#{$color}-soft {
+    @include button-soft-variant($value);
+  }
+}
+
+// Button primary soft check hover
+.btn-primary-soft-check:hover {
+  background-color: rgba(var(--#{$prefix}primary-rgb), 0.2);
+  border: 1px solid  var(--#{$prefix}primary);
+  color:  var(--#{$prefix}primary);
+}
+.btn-check:active+.btn-primary-soft-check, .btn-check:checked+.btn-primary-soft-check, .btn-primary-soft-check.active, .btn-primary-soft-check:active, .show>.btn-primary-soft-check.dropdown-toggle {
+  background-color: rgba(var(--#{$prefix}primary-rgb), 0.2);
+  color:  var(--#{$prefix}primary);
+  border: 1px solid  var(--#{$prefix}primary);
+}
+.btn-check:focus + .btn, .btn-round-shadow:focus {
+  box-shadow: none;
+}
+
+// Button dark check
+.btn-dark-bg-check{
+  border: 1px solid transparent !important;
+}
+.btn-check:active+.btn-dark-bg-check, .btn-check:checked+.btn-dark-bg-check, .btn-dark-bg-check.active, .btn-dark-bg-check:active, .show>.btn-dark-bg-check.dropdown-toggle {
+  background-color: $gray-900;
+  color: $white;
+}
+.btn-check:focus + .btn, .btn-round-shadow:focus {
+  box-shadow: none;
+}
+
+// Advance filter see more
+.btn-more {
+  i{
+    transition: $transition-base;
+  }
+  &[aria-expanded="true"] i{
+    transform: rotate(180deg);
+    transition: $transition-base;
+    transform-origin: center;
+  }
+  .see-more{
+    display: block;
+  }
+  .see-less{
+    display: none;
+  }
+  &[aria-expanded="true"] .see-more{
+    display: none;
+  }
+  &[aria-expanded="true"] .see-less{
+    display: block;
+  }
+}
+
+// Button flip icon
+.btn-flip-icon{
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+@include media-breakpoint-down(md){
+  .btn-flip-icon{
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%, -50%);
+    margin-top: 0.5rem;
+    i{
+      transform: rotate(270deg);
+    }
+  }
+}
+
+// Button primary check
+.btn-primary-check:hover {
+  background-color: var(--#{$prefix}primary) !important;
+  color: $white !important;
+  border: $border-width solid var(--#{$prefix}primary);
+}
+.btn-check:active + .btn-primary-check, .btn-check:checked + .btn-primary-check, .btn-primary-check.active, .btn-primary-check:active, .show > .btn-primary-check.dropdown-toggle {
+  background-color: var(--#{$prefix}primary);
+  color: $white;
+  border: $border-width solid var(--#{$prefix}primary);
+}
+
+// Button dark hover
+.btn-dark-hover:hover{
+  background-color: $gray-800 !important;
+  border-color: $dark;
+  color: $white !important;
+}
+
+// 
+// card.scss
+// Extended from Bootstrap
+//
+
+// 
+// Additional styles for theme
+// 
+
+// Quick fix for border radius issue in safari
+.card.overflow-hidden, .tiny-slider.overflow-hidden{
+  will-change: transform;
+}
+
+.card-header-title{
+  margin-bottom: 0;
+}
+
+// Card image overlay z index
+.card{
+  .card-img-overlay{
+    z-index: 2;
+  }
+}
+
+// Card hover element show
+.card.card-element-hover{
+  .hover-element{
+    visibility: hidden;
+    opacity: 0;
+    transition: $transition-base;
+    z-index: 9;
+  }
+  &:hover{
+    .hover-element{
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+// Card-image scale
+.card.card-img-scale {
+  .card-img-scale-wrapper{
+    transform: translateZ(0);
+    position: relative;
+    overflow: hidden;
+  }
+  img {
+    transition: all .5s ease;
+    transform: scale(1.001);
+  }
+}
+.card.card-img-scale:hover img {
+  transform: scale(1.03);
+}
+
+// Hover overlay
+.card-overlay-hover:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+	transition: $transition-base;
+  background-color: $dark;
+  display: block;
+}
+.card-overlay-hover:hover:before {
+  opacity: 0.5;
+}
+
+// Card hover shadow
+.card.card-hover-shadow{
+  box-shadow: 0px 3px 20px rgba(29, 58, 83, .08);
+  transition: $transition-base;
+}
+.card.card-hover-shadow:hover{
+  transform: translateY(-4px);
+  box-shadow: 0px 10px 30px rgba(29, 58, 83, .15);
+}
+  
+// card grid for fix height
+.card-grid {
+  .card-grid-lg{
+    height: 400px;
+  }
+  .card-grid-sm{
+    height: calc(200px - calc(var(--bs-gutter-y) / 2));
+  }
+}
+@include media-breakpoint-down(md) {
+  .card-grid .card-grid-lg{
+    height: 320px;
+  }
+}
+
+//Card metro
+.card-metro {
+  overflow: hidden;
+
+  .card-img-overlay {
+    z-index: 2;
+  }
+
+  .card-text, img {
+    transition: $transition-base;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    height: 70%;
+    width: 100%;
+    bottom: 0;
+    background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, 1));
+    z-index: 1;
+  }
+
+  &:hover {
+    .card-text {
+      margin-bottom: 10px;
+    }
+
+    .card-image img {
+      transform: scale(1.08);
+    }
+  }
+}
+
+// 
+// dropdowns.scss
+// Extended from Bootstrap
+// 
+
+// 
+// Bootstrap Overrides
+//
+
+// Dropdown soft hover
+.dropdown-item.active, .dropdown-item:active,
+.dropdown-item:hover, .dropdown-item:focus{
+  border-radius: $border-radius;
+}
+.dropdown-menu{
+  padding-left: 10px;
+  padding-right: 10px;
+  z-index: 1100;
+  box-shadow: $box-shadow;
+}
+
+// 
+// Additional styles for theme
+// 
+
+// Dropdown menu size
+.dropdown-menu-size-sm{
+  min-width: 13rem;
+}
+.dropdown-menu-size-md{
+  min-width: 22rem;
+}
+.dropdown-menu-size-lg{
+  min-width: 30rem;
+}
+
+@include media-breakpoint-down(sm) {
+  .dropdown-menu-size-md{
+    min-width: 17rem;
+    margin-right: -35px !important;
+  }
+  .dropdown-menu-size-sm{
+    min-width: 13rem;
+  }
+}
+
+// Dropdown custom icon
+.dropdown .dropdown-toggle:after {
+  content: "\f107";
+  font-family: $fa-font-family;
+  font-weight: 900;
+  vertical-align: middle;
+  border: none;
+}
+
+// Dropup custom icon
+.dropup .dropdown-toggle:after {
+  content: "\f106";
+  font-family: $fa-font-family;
+  font-weight: 900;
+  vertical-align: middle;
+  border: none;
+}
+
+// Dropstart custom icon
+.dropstart .dropdown-toggle:before {
+  content: "\f104";
+  font-family: $fa-font-family;
+  font-weight: 900;
+  vertical-align: middle;
+  border: none;
+}
+
+// Dropend custom icon
+.dropend .dropdown-toggle:after {
+  content: "\f105";
+  font-family: $fa-font-family;
+  font-weight: 900;
+  vertical-align: middle;
+  border: none;
+}
+
+// Dropdown custom size
+@include media-breakpoint-down(lg) {
+  .dropdown-width-lg{
+    width: 100%;
+    padding: 0;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .dropdown-width-lg{
+    width: 40rem;
+    padding: 0;
+  }
+}
+
+@include media-breakpoint-up(xxl) {
+  .dropdown-width-lg{
+    width: 50rem;
+    padding: 0;
+  }
+}
+
+// Dropdown mega menu
+.dropdown-fullwidth {
+  .dropdown-menu {
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    padding: 1rem 0;
+  }
+}
+
+// Dropdown fullwidth menu width on responsive
+@each $breakpoint, $container-max-width in $container-max-widths {
+  @include media-breakpoint-up($breakpoint) {
+    .dropdown-fullwidth {
+      position: static;
+      .dropdown-menu {
+        max-width: $container-max-width; 
+      }
+    }
+  }
+}
+
+// dropdown menu start end position
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    .dropdown-menu#{$infix}-start {
+      left: 0;
+    }
+    .dropdown-menu#{$infix}-end {
+      right: 0;
+    }
+  }
+}
+
+// Dropdown menu slide in animation on click
+.dropdown-menu.dropdown-animation.show {
+  animation-duration: 0.3s !important;
+  animation-fill-mode: both;
+  animation-name: dropdownslideIn;
+  position: absolute !important;
+  top: 100% !important;
+  transition: none;
+}
+
+@keyframes dropdownslideIn {
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+  100% {
+    transform:translateY(0rem);
+    opacity: 1;
+  }
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes dropdownslideIn {
+  0% {
+    -webkit-transform: transform;
+    -webkit-opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    -webkit-opacity: 1;
+  }
+  0% {
+    -webkit-transform: translateY(1rem);
+    -webkit-opacity: 0;
+  }
+}
+
+// 
+// list-group.scss
+// Extended from Bootstrap
+// 
+
+// 
+// Additional style for theme
+// 
+
+// List group borderless
+.list-group-borderless {
+  .list-group-item {
+    border: none !important;
+    padding: 0.425rem 0;
+  }
+  a.list-group-item {
+    &:hover {
+      background-color: transparent;
+      color: var(--#{$prefix}primary);
+    }
+  }
+}
+
+// 
+// nav.scss
+// Extended from Bootstrap
+// 
+
+// 
+// Additional style for theme
+// 
+
+// Pills
+.nav-pills {
+  .nav-link {
+    cursor: pointer;
+    // margin-bottom: 15px;
+    padding: 0.5rem 1rem;
+    color: var(--#{$prefix}primary);
+    white-space: nowrap;
+  }
+}
+
+// Nav link padding left 0
+.nav.flex-column:not(.nav-pills) .nav-link {
+  padding-left: 0;
+  padding-top: 0.30rem;
+  padding-bottom: 0.30rem;
+}
+
+// Nav responsive
+@include media-breakpoint-down(lg){
+  .nav-responsive{
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+  }
+} 
+
+// Nav divider
+.nav.nav-divider{
+  a:not(.dropdown-item){
+    color: inherit;
+  }
+  .nav-item+.nav-item:before{
+    content: "\2022";
+    color: inherit;
+    padding-left: .65rem;
+    padding-right: .75rem;
+    opacity: 0.8;
+  }
+  .nav-item{
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .nav-link{
+    padding: 0;
+    color: inherit;
+  }
+}
+
+// Nav pills primary soft
+.nav-pills-primary-soft{
+  .nav-item{
+    padding: 0 !important;
+    margin-right: 2px;
+    margin-left: 2px;
+    border-bottom: 0 !important;
+  }
+  .nav-link{
+    padding: 0.5rem 0.8rem !important;
+    color: var(--#{$prefix}gray-800);
+    font-weight: 500;
+    border-radius: $border-radius;
+
+    &.active , &:hover{
+      color: var(--#{$prefix}primary);
+      background-color: rgba(var(--#{$prefix}primary-rgb), 0.1);
+    }
+  }
+}
+.nav-pills-primary-soft.flex-column{
+  .nav-item{
+      margin-bottom: 3px;
+      margin-right: 0;
+    }
+}
+
+// Nav pill dark
+.nav-pills-dark .nav-link {
+  background-color: var(--#{$prefix}gray-200);
+  color: var(--#{$prefix}gray-900);
+  border: none;
+  font-weight: 600;
+}
+.nav-pills-dark .nav-link.active, .nav-pills-dark .show > .nav-link {
+  color: $white;
+  background-color: $dark;
+}
+
+// Tab line
+.nav.nav-bottom-line{ 
+  .nav-link{
+    background: transparent;
+    border: transparent;
+    border-bottom: 3px solid transparent;
+    font-weight: 600;
+    padding: 0.6rem 0.75rem;
+    white-space: nowrap;
+    &.active {
+      background: transparent;
+      color: var(--#{$prefix}primary);
+      border-bottom: 3px solid var(--#{$prefix}primary);
+    }
+  }  
+}
+
+// Nav pills shadow
+.nav-pills-shadow{
+  .nav-item{
+    padding: 0 !important;
+    border-bottom: 0 !important;
+  }
+  .nav-link{
+    padding: 0.5rem 0.8rem !important;
+    color: var(--#{$prefix}body-color);
+    font-weight: 500;
+    border-radius: $border-radius;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 1px solid transparent;
+    &:hover{
+      color: var(--#{$prefix}gray-800);
+    }
+    &.active{
+      color: var(--#{$prefix}gray-800);
+      background-color: var(--#{$prefix}light);
+      border: 1px solid $input-border-color;
+    }
+    &:focus-visible{
+      outline: none !important;
+    }
+  }
+}
+.nav-pills-primary-soft.flex-column{
+  .nav-item{
+      margin-bottom: 3px;
+      margin-right: 0;
+    }
+}
+
+
+// 
+// navbar.scss
+// Extended from Bootstrap
+// 
+
+// 
+// Bootstrap Overrides and Additional style for theme
+// 
+
+
+// `.navbar-expand-*` responsive classes for configuring
+// where your navbar collapses.
+.navbar-expand {
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    $next: breakpoint-next($breakpoint, $grid-breakpoints);
+    $infix: breakpoint-infix($next, $grid-breakpoints);
+    
+    // Styling for navbar-expand
+    &#{$infix} {
+
+      // Navbar styling for all screen sizes
+			// Custom dropdown toggle icon
+      .dropdown-toggle:after {
+        content: "";
+        font-family: $fa-font-family;
+        margin-left: 0.35rem;
+        font-weight: 900;
+        font-size: 0.8rem;
+        vertical-align: middle;
+        border: none;
+      }
+      .dropdown-submenu.dropend .dropdown-toggle:after {
+        content: "";
+        font-family: $fa-font-family;
+        right: 1rem;
+        font-size: 1rem;
+      }
+      .dropdown-submenu.dropstart .dropdown-toggle:before{
+        content: "";
+        margin-right: 0;
+        font-family: $fa-font-family;
+        right: 1rem;
+				position: absolute;
+      }
+
+      // Navbar styling for navbar expand
+      @include media-breakpoint-up($next) {
+        
+        .navbar-top{
+          z-index: 1100 !important;
+        }
+        .navbar-brand .navbar-brand-item {
+          height: $navbar-brand-height;
+          display: block;
+          width: auto;
+         }
+
+        //Dropdown menu open on hover
+        .navbar-nav .dropdown>.dropdown-menu {
+          top: 120%;
+          visibility: hidden;
+          opacity: 0;
+          display: block;
+          transition: all 0.1s ease-in-out;
+        }
+        .navbar-nav .dropdown:hover>.dropdown-menu {
+          display: block;
+          top: 100%;
+          visibility: visible;
+          opacity: 1;
+          transition: all 0.3s ease-in-out;
+        }
+
+        //Dropdown submenu open on hover
+        .navbar-nav .dropdown .dropdown-submenu>.dropdown-menu {
+          visibility: hidden;
+          opacity: 0;
+          display: block;
+          transition: all 0.1s ease-in-out;
+        }
+        .navbar-nav .dropdown .dropdown-submenu:hover>.dropdown-menu {
+          display: block;
+          visibility: visible;
+          opacity: 1;
+          transition: all 0.3s ease-in-out;
+          box-shadow: $box-shadow;
+          margin-left: 0.5rem;
+        }
+        .navbar-nav .dropdown .dropdown-submenu.dropstart:hover>.dropdown-menu {
+          margin-right: 0.5rem;
+        }
+        .navbar-nav .dropdown>.dropdown-toggle:active {
+          pointer-events: none;
+        }
+
+        // Navbar bottom active line
+        .navbar-nav.nav-active-line .show > .nav-link, .navbar-nav.nav-active-line .nav-link.active {
+          color: var(--bs-navbar-active-color);
+          border-bottom: 2px $border-style var(--#{$prefix}primary);
+        }
+
+        // Navbar bottom line
+        &.navbar-divider{
+          border-bottom: $border-width $border-style $dropdown-divider-bg;
+        }
+
+        //Line height
+        .navbar-nav .nav-link {
+          // line-height: 40px;
+          font-weight: $font-weight-normal;
+        }
+
+       	.dropdown-menu .dropdown-toggle:after {
+          position: absolute;
+        }
+
+				// Dropdown menu shadow stacked
+				.dropdown-menu-shadow-stacked {
+					z-index: 5;
+					.dropdown-submenu {
+						z-index: unset !important;
+					}
+				
+					.dropdown-menu {
+						z-index: -1;
+						> * {
+							z-index: 1;
+							position: relative;
+						}
+						&:before {
+							content: "";
+							position: absolute;
+							top: 0;
+							bottom: 0;
+							right: 0;
+							left: 0;
+							background: $dropdown-bg;
+							box-shadow: $box-shadow;
+							border-radius: inherit;
+						}
+						li {
+							position: relative;
+						}
+						box-shadow: none !important;
+					}
+				}
+      }
+
+      // Navbar styling for navbar collapse
+      @include media-breakpoint-down($next) {
+        
+        .navbar-brand .navbar-brand-item {
+          height: $navbar-mobile-brand-height;
+        }
+        .navbar-brand {
+          padding: $navbar-mobile-brand-padding-y 0;
+        }
+        .navbar-nav-scroll {
+          max-height: var(--#{$variable-prefix}scroll-height, 65vh);
+        }
+
+        // Responsive dropdown menu without navbar toggle. Collapse will open on .nav-item 
+        .navbar-collapse {
+          box-shadow: 0px 10px 30px rgba(83, 88, 93, .4);
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 100%;
+          background: var(--#{$prefix}body-bg);
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+          .navbar-nav .nav-item {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 8px 20px;
+          }
+          .navbar-nav .nav-item .nav-link{
+            padding: 0.25rem 0;
+          }
+         }
+
+        &.navbar-dark{
+          .nav-link{
+            color: var(--#{$prefix}navbar-light-color);
+            &:hover, &:focus {
+              color: var(--bs-nav-link-hover-color);
+          }
+          }
+          
+        }
+
+        // Dropdown submenu background
+        .navbar-nav .nav-item > .dropdown-menu .dropdown-submenu .dropdown-menu {
+          background: rgba(var(--bs-gray-700), 0.5) !important;
+        }
+
+        // Dropdown toggle icon
+        .navbar-collapse .navbar-nav .dropdown-toggle::after {
+          position: absolute;
+          right: 25px;
+        }
+
+        //Toggler icon
+        .navbar-toggler {
+          // border-color: transparent !important; 
+          border: none;
+        }
+
+        //Offcanvas body
+        .offcanvas-body{
+          padding: 1rem 0.875rem;
+         }
+        .offcanvas-body .navbar-nav .nav-item {
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          padding: 8px 0;
+        }
+
+        // Dropdown toggle icon
+        .offcanvas-body .navbar-nav .dropdown-toggle::after {
+          position: absolute;
+        }
+
+        // Responsive Dropdown menu design
+        .navbar-nav .dropdown-menu{
+          border: 1px solid var(--bs-border-color);
+          margin-top: 8px;
+          box-shadow: none;
+        }
+
+        // Navbar category menu
+        .navbar-nav.nav-primary-soft {
+          .nav-item .nav-link {
+            padding: 0.5rem 0.75rem;
+          }
+        }
+
+        // Navbar offcanvas menu padding
+        .navbar-nav.navbar-offcanvas-menu{
+          .nav-item{
+            padding: 0.5rem 0;
+            .nav-link{
+              padding: 0.25rem 0;
+            }
+          }
+          .nav-item > .dropdown-menu {
+            background: transparent;
+            padding: 0;
+            box-shadow: none;
+            border-left: $border-style $border-width $border-color;
+            border-radius: 0;
+            margin-left: 8px;
+          }
+          .nav-item > .dropdown-menu .dropdown-item{
+            &.active, &:hover{
+              background: none !important;
+            }
+          }
+        }
+
+      }
+    }
+  }
+}
+
+//Header sticky css
+@include media-breakpoint-up(xl){
+  header.header-sticky-on {
+    position: fixed;
+    z-index: 1040;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--#{$prefix}body-bg);
+    animation: fadeInDown .5s;
+    width: 100%;
+    border-bottom: $border-width solid $border-color;
+  }
+  header.header-sticky-on .navbar-top {
+    display: none !important;
+  }
+  header.header-sticky-on .navbar-brand {
+    padding: $navbar-brand-padding-y-sticky 0;
+  }
+  header.header-sticky-on .navbar-brand .navbar-brand-item {
+    height: $navbar-brand-height-sticky;
+  }
+}
+
+
+//Animation for fade in down
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+// Navbar transparent
+.header-transparent {
+	background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+// Navbar toggler icon animation
+.navbar-toggler{
+  padding: 10px 10px;
+}
+.navbar-toggler{
+  padding: 10px 10px;
+}
+.navbar-toggler .navbar-toggler-animation {
+  transition: all 0.3s ease-in-out;
+  background-image: none;
+  position: relative;
+  height: 22px;
+  width: 22px;
+  display: inline-block;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+}
+.navbar-toggler .navbar-toggler-animation span {
+  transition: all 0.3s ease-in-out;
+  transform: rotateZ(0deg);
+  height: 2px;
+  background: var(--#{$prefix}navbar-color);
+  display: block;
+  position: absolute;
+  width: 100%;
+  border-radius: 30px;
+}
+.navbar-toggler .navbar-toggler-animation span:nth-child(1) {
+  top: 10%;
+}
+.navbar-toggler .navbar-toggler-animation span:nth-child(2) {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.navbar-toggler .navbar-toggler-animation span:nth-child(3) {
+  bottom: 10%;
+}
+.navbar-toggler[data-bs-toggle=collapse][aria-expanded=true] .navbar-toggler-animation span:nth-child(1) {
+  transform: rotateZ(45deg) translateY(-50%);
+  top: 49%;
+  transform-origin: 50% 0;
+  width: 100%;
+}
+.navbar-toggler[data-bs-toggle=collapse][aria-expanded=true] .navbar-toggler-animation span:nth-child(2) {
+  visibility: hidden;
+  transition: all 0s ease-in-out;
+}
+.navbar-toggler[data-bs-toggle=collapse][aria-expanded=true] .navbar-toggler-animation span:nth-child(3) {
+  transform: rotateZ(-45deg) translateY(-50%);
+  bottom: 42%;
+  transform-origin: 50% 0;
+  width: 100%;
+}
+
+
+// Notification icon
+.nav-notification{
+  width: 2.6rem;
+  height: 2.6rem;
+  line-height: 2.6rem;
+  text-align: center;
+  font-size: 0.8rem;
+}
+//Nevbar mobile screen responsive
+@include media-breakpoint-down(sm){
+  .nav .nav-item {
+    .nav-notification{
+      width: 2rem;
+      height: 2rem;
+      line-height: 2rem;
+      font-size: 0.8rem;
+    }
+    .avatar{
+      height: 2rem;
+      width: 2rem;
+    }
+  }
+}
+
+// Navbar dark
+// .navbar-dark-static{
+//   .nav-link{
+//     color: $white !important;
+//     &:hover,
+//     &:focus {
+//       color: var(--#{$prefix}nav-link-hover-color) !important;
+//     }
+//   }
+
+//   .navbar-toggler .navbar-toggler-animation span {
+//     background-color: $white;
+//   }
+//   .navbar-collapse.show{
+//     .nav-link{
+//       color: var(--#{$prefix}nav-link-color) !important;
+//       &:hover,
+//       &:focus {
+//         color: var(--#{$prefix}nav-link-hover-color) !important;
+//       }
+//     }
+//   }
+// }
+
+// To keep light navbar in dark mode and light mode use below class in header tag
+[data-bs-theme="dark"] .navbar-light-static{
+  .nav-link{
+    color: $dark !important;
+    &:hover,
+    &:focus {
+      color: var(--#{$prefix}nav-link-hover-color) !important;
+    }
+  }
+
+  .navbar-toggler .navbar-toggler-animation span {
+    background-color: $dark;
+  }
+
+  .navbar-collapse.show{
+    .nav-link{
+      color:  var(--#{$prefix}nav-link-color) !important;
+      &:hover,
+      &:focus {
+        color: var(--#{$prefix}nav-link-hover-color) !important;
+      }
+    }
+  }
+}
+[data-bs-theme="dark"] header.header-sticky-on{
+  border: 0;
+  .navbar-light-static{
+    .nav-link{
+      color: var(--#{$prefix}nav-link-color) !important;
+      &:hover,
+      &:focus {
+        color: var(--#{$prefix}nav-link-hover-color) !important;
+      }
+   }
+  }
+}
+
+// 
+// offcanvas.scss
+// Extended from Bootstrap
+// 
+
+//
+// Bootstrap Overrides
+//
+
+.offcanvas-w-500px{
+  width: 500px !important;
+}
+
+@include media-breakpoint-down(sm) {
+  .offcanvas-w-500px{
+    width: 300px !important;
+  }
+}
+
+// 
+// pagination.scss
+// Extended from Bootstrap
+// 
+
+//
+// Bootstrap Overrides
+//
+
+// For better responsive
+.pagination {
+  .page-item{
+    margin-bottom: 5px;
+    float: left;
+  }
+}
+
+// 
+// Additional style for theme
+//
+
+//Pagination primary soft
+.pagination-primary-soft{
+  border: none;
+  padding: 4px;
+  border-radius: $border-radius;
+  .page-item{
+    margin: 3px;
+    &.page-item.active .page-link{
+      color: $white;
+      background-color: var(--#{$prefix}primary);
+    }
+  }
+  .page-link{
+    border: transparent;
+    border-radius: $border-radius !important;
+    color: var(--#{$prefix}gray-700);
+    background-color: var(--#{$prefix}light);
+    &:hover {
+      z-index: 2;
+      color: $white;
+      background-color: var(--#{$prefix}primary);
+      border-color: var(--#{$prefix}primary);
+    }
+  }
+}
+
+// 
+// progress.scss
+// Extended from Bootstrap
+// 
+
+// 
+// Additional style for theme
+//
+.progress{
+    position: relative;
+    overflow-x: visible;
+    overflow-y: visible;
+  .progress-bar{
+    position: relative;
+    overflow: visible;
+    border-radius: $border-radius;
+  }
+  .progress-percent{
+    color: $gray-600;
+    font-weight: $font-weight-normal;
+    line-height: 24px;
+    position: absolute;
+    right: 0;
+    top: -24px;
+    font-size: 12px;
+  }
+  .progress-percent-simple {
+    position: absolute;
+    right: 0;
+    top: -20px;
+    font-size: 14px;
+  } 
+}
+
+// progress percent style
+.progress.progress-percent-bg .progress-percent {
+  background: var(--#{$prefix}dark);
+  padding: 2px 5px;
+  border-radius: 2px;
+  color: var(--#{$prefix}body-bg);
+  line-height: 16px;
+  position: absolute;
+  right: 0;
+  top: -25px;
+  font-size: 10px;
+  &:before {
+    border-top-color: var(--#{$prefix}dark);
+    border-width: 5px;
+    left: 50%;
+    margin-left: -5px;
+  }
+  &:after, &:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  &:after {
+    border-top-color: var(--#{$prefix}dark);
+    border-width: 4px;
+    left: 50%;
+    margin-left: -4px;
+  }
+}
+
+// progress size
+.progress {
+  &.progress-xs {
+    height: 3px;
+  }
+  &.progress-sm {
+    height: 5px;
+  }
+  &.progress-md {
+    height: 10px;
+  }
+  &.progress-lg {
+    height: 16px;
+  }
+  &.progress-xl {
+    height: 20px;
+  }
+}
+// 
+// reboot.scss
+// Extended from Bootstrap
+// 
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  overflow-x: hidden;
+  z-index: 0;
+  position: relative;
+}
+
+header {
+  position: relative;
+  z-index: $zindex-header;
+  background: var(--#{$prefix}body-bg);
+}
+
+a {
+  transition: $transition-base;
+}
+
+%heading > a{
+  color: $headings-color;
+  &:hover{
+    color: var(--#{$prefix}primary);
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+video {
+  background-size: cover;
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+}
+
+// Section padding top and bottom
+section {
+  padding-top: ($spacer * 3.5);
+  padding-bottom: ($spacer * 2.8);
+}
+
+@include media-breakpoint-down(md) {
+  section {
+    padding-top: ($spacer * 4);
+    padding-bottom: ($spacer * 3);
+  }
+}
+
+// 
+// tables.scss
+// Extended from Bootstrap
+// 
+
+// 
+// Additional styles for theme
+// 
+
+.table td, .table th {
+  white-space: nowrap;
+}
+
+.table-compare td, .table-compare th {
+  white-space: normal;
+}
+
+@media (min-width: 767.98px) {
+  .table-shrink.table td, .table-shrink.table th {
+    white-space: inherit;
+  }
+}
+@media (max-width: 767.98px) {
+  .table-shrink .table-responsive-title{
+    width: 200px;
+    white-space: normal;
+  }
+}
+
+// 
+// type.scss
+// Extended from Bootstrap
+// 
+
+// 
+// Additional style for theme
+//
+
+// Bg danger soft hover
+.bg-danger-soft-hover {
+  &:hover, &:active, &:focus {
+    background-color: rgba($danger, $soft-alpha) !important;
+    color: $danger !important;
+  }
+}
+
+// Background light hover
+.bg-light-hover{
+  &:hover, &.active, &:focus{
+    background-color: var(--bs-light) !important;
+  }
+}
+
+// Background overlay. Use with bootstrap bg colors and bg opacity classes like this >> bg-overlay bg-dark bg-opacity-10
+.bg-overlay {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+//
+// Emphasis
+//
+small,
+.small {
+  font-weight: $font-weight-light;
+}
+
+.smaller {
+  font-size: 0.70em;
+  font-weight: $font-weight-light;
+}
+
+// dropcap
+.dropcap{
+  font-size: 4em;
+  font-weight: bold;
+  display: block;
+  float: left;
+  margin: .04em .2em 0 0;
+  color: $headings-color;
+  line-height: 1;
+}
+
+// Bg blur
+.bg-blur{
+  backdrop-filter: blur(5px);
+}
+
+// Social media colors
+
+// facebook
+.bg-facebook{
+  background-color: #5d82d1;
+  color: $white;
+  border: none;
+  &:hover, &:active, &:focus{
+    background-color: shift-color(#5d82d1, 10%);
+    color: $white;
+  }
+}
+.text-facebook{
+  color: #5d82d1;
+  &:hover{
+    color: shift-color(#5d82d1, 10%);
+  }
+}
+
+// Whatsaap
+.bg-whatsapp{
+  background-color: #25D366;
+  color: $white;
+  border: none;
+  &:hover, &:active, &:focus{
+    background-color: shift-color(#25D366, 10%);
+    color: $white;
+  }
+}
+.text-whatsapp{
+  color: #25D366;
+  &:hover{
+    color: shift-color(#25D366, 10%);
+  }
+}
+
+// instagram
+.bg-instagram{
+  background: #c22b72;
+  color: $white;
+  border: none;
+  &:hover, &:active, &:focus{
+    background-color: shift-color(#c22b72, 10%);
+    color: $white;
+  }
+}
+.text-instagram{
+  color: #c22b72;
+  &:hover{
+    color: shift-color(#c22b72, 10%);
+  }
+}
+
+// instagram
+.bg-instagram-gradient{
+  background: radial-gradient(circle at 20% 130%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+  background: -webkit-radial-gradient(circle at 20% 130%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+  color: $white;
+  background-size: 120% 120%;
+  background-position: right bottom;
+  transition: $transition-base;
+  border: 0;
+  &:hover, &:active, &:focus{
+    background: radial-gradient(circle at 20% 130%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+    background: -webkit-radial-gradient(circle at 20% 130%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+    color: $white;
+    background-size: 100% 100%;
+    transition: $transition-base;
+    background-position: left bottom;
+  }
+}
+.text-instagram-gradient{
+  color: transparent;
+  background: radial-gradient(circle at 20% 130%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+  background: -webkit-radial-gradient(circle at 20% 130%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  transition: $transition-base;
+  background-size: 120% 120%;
+  &:hover{
+    color: transparent;
+    background: radial-gradient(circle at 20% 130%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+    background: -webkit-radial-gradient(circle at 20% 130%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-size: 100% 100%;
+    transition: $transition-base;
+  }
+}
+
+// google
+.bg-google{
+  background-color: #3c7ff1;
+  color: $white;
+  border: none;
+  &:hover, &:active, &:focus{
+    background-color: shift-color(#3c7ff1, 10%);
+    color: $white;
+  }
+}
+.text-google{
+  color: #3c7ff1;
+  &:hover{
+    color: shift-color(#3c7ff1, 10%);
+  }
+}
+.text-google-icon {
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+
+// twitter
+.bg-twitter{
+  background-color: #40bff5;
+  color: $white;
+  border: none;
+  &:hover, &:active, &:focus{
+    background-color: shift-color(#40bff5, 10%);
+    color: $white;
+  }
+}
+.text-twitter{
+  color: #40bff5;
+  &:hover{
+    color: shift-color(#40bff5, 10%);
+  }
+}
+
+// linkedin
+.bg-linkedin{
+  background-color: #238cc8;
+  color: $white;
+  border: none;
+  &:hover, &:active, &:focus{
+    background-color: shift-color(#238cc8, 10%);
+    color: $white;
+  }
+}
+.text-linkedin{
+  color: #238cc8;
+  &:hover{
+    color: shift-color(#238cc8, 10%);
+  }
+}
+
+// youtube
+.bg-youtube{
+  background-color: #ff0000;
+  color: $white;
+  border: none;
+  &:hover, &:active, &:focus{
+    background-color: shift-color(#ff0000, 10%);
+    color: $white;
+  }
+}
+
+.text-youtube{
+  color: #ff0000;
+  &:hover{
+    color: shift-color(#ff0000, 10%);
+  }
+}
+
+// 
+// form-check.scss
+// Extended from Bootstrap
+// 
+
+// 
+// Additional style for theme
+//
+
+// Cursor pointer
+.form-check {
+  .form-check-input, .form-check-label  {
+    cursor: pointer;
+  }
+}
+
+// form check size
+.form-check {
+  &.form-check-md{
+    .form-check-input{
+      height: 1.3em;
+      width: 1.3em;
+      margin-top: 0.15em;
+    }
+    .form-check-input, 
+    .form-check-label{
+      padding-left: 0.6em;
+    }
+  }
+}
+
+// form switch size
+.form-switch {
+  &.form-check-md{
+    .form-check-input{
+      width: 2.4em;
+    }
+  }
+  &.form-check-lg{
+    .form-check-input{
+      height: 2em;
+      width: 4em;
+      margin-top: 0.15em;
+      .form-check-input{
+        width: 3.4em;
+      }
+    }
+  }
+}
+
+// Check bg light
+.form-check-light .form-check-input{
+  background-color: var(--#{$prefix}gray-200);
+  border: 0;
+}
+
+.form-check-light .form-check-input:checked{
+  background-color:var(--#{$prefix}primary);
+}
+
+// 
+// form-control.scss
+// Extended from Bootstrap
+// 
+
+//
+// Additional style for theme
+//
+
+// Font size for form
+.form-fs-lg {
+  .form-control {
+    font-weight: $font-weight-normal;
+    font-size: $form-fs-lg;
+  }
+}
+.form-fs-md {
+  .form-control {
+    font-weight: $font-weight-normal;
+    font-size: $form-fs-md;
+  }
+}
+.form-fs-sm {
+  .form-control {
+    font-weight: $font-weight-normal;
+    font-size: $form-fs-sm;
+  }
+}
+
+// Flatpickr remove calender icon
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+// Form Inline
+.form-control-inline {
+  .form-control-inline-text{
+    font-family: $headings-font-family;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.8;
+    color: $dark;
+    margin: 0 1rem;
+  }
+
+  .form-control{
+    min-width: 200px;
+    max-width: 700px;
+    font-family: $headings-font-family;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: $dark;
+    text-align: center;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 2px dashed $dark;
+    padding: 0;
+    padding-left: 1rem;
+    padding-right: 2rem;
+    background-color: transparent !important;
+    &::placeholder{
+      color: $dark;
+    }
+  }
+
+  .choices .choices__inner{
+    min-width: 200px;
+    max-width: 500px;
+    border: 0;
+    border-bottom: 2px dashed $dark;
+    border-radius: 0;
+    padding: 0;
+    text-align: left;
+    background: transparent;
+    .choices__item{
+      font-family: $headings-font-family;
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: $dark;
+      text-align: center;
+      padding-left: 1rem;
+      padding-right: 2rem;
+    }
+    .choices__placeholder{
+      color: $dark !important;
+      opacity: 1;
+    }
+  }
+  .choices .choices__list--dropdown{
+    text-align: left;
+  }
+  .choices.is-focused[data-type*=select-one] .choices__inner{
+    border-color: $dark !important;
+  }
+  .choices[aria-expanded=true] .choices__inner{
+    border-radius: 0 !important;
+  }
+  .choices[data-type*=select-one]:after{
+    content: "";
+    font-family: $fa-font-family;
+    margin-left: 0.35rem;
+    font-weight: 900;
+    font-size: 0.8rem;
+    color: $dark;
+    background-image: none;
+  }
+  
+} 
+@include media-breakpoint-down(sm){
+  .form-control-inline {
+    .form-control-inline-text{
+      font-size: 1.5rem;
+      margin-top: 10px;
+    }
+    .form-control{
+      min-width: 0;
+      font-size: 1.5rem;
+      margin-top: 10px;
+    }
+    .choices .choices__inner{
+      min-width: 0;
+      .choices__item{
+        font-size: 1.5rem !important;
+      }
+    }
+  }
+}
+
+// Form border
+.form-control-border{
+  width: 100%;
+  .form-label{
+    background-color: var(--#{$prefix}mode);
+    position: relative;
+    z-index: 9;
+    margin-left: 1rem;
+    padding: 0 8px;
+    border-radius: $input-border-radius;
+  }
+}
+
+// Form Bg light
+.form-control-bg-light {
+  .form-control{
+    border-color: var(--#{$prefix}light) !important;
+    background-color: var(--#{$prefix}light) !important;
+    &:focus{
+      border-color: $input-focus-border-color !important;
+    }
+  }
+}
+
+// Form border bottom
+.form-border-bottom{
+  border-bottom: $input-border-width $border-style $input-border-color;
+  .form-control {
+    border: none;
+  }
+}
+
+// Form with icon
+.form-icon-input{
+  position: relative;
+    .form-control{
+      color: $headings-color;
+      background: var(--#{$prefix}light) !important;
+      padding-left: 3.2rem;
+      &::placeholder {
+        color: $input-placeholder-color;
+      }
+    }
+    .form-icon{
+      position: absolute;
+      transform: translateY(-50%) !important;
+      top: 50%;
+      left: 0;
+      padding-left: 1rem;
+    }
+  }
+
+
+  // Border transparent
+  .form-border-transparent{
+    .form-control{
+      color: $headings-color;
+      border: $border-width $border-style transparent;
+      &:focus{
+        border-color: $input-focus-border-color;
+      }
+    }
+  }
+
+  // Form control transparent
+  .form-control-transparent{
+    .form-control{
+      background: transparent !important;
+    }
+  }
+
+  // Form input dropdown
+  .form-input-dropdown{
+    .form-control[aria-expanded=true]{
+      border-radius: $input-border-radius $input-border-radius 0 0 !important;
+      border-color: $input-focus-border-color;
+    }
+    .form-control.form-control-lg[aria-expanded=true]{
+      border-radius: $input-border-radius-lg $input-border-radius-lg 0 0 !important;
+      border-color: $input-focus-border-color;
+    }
+    .input-dropdown{
+      border: $input-border-width solid $input-focus-border-color !important;
+      border-radius: 0;
+      border-bottom-left-radius: $border-radius !important;
+      border-bottom-right-radius: $border-radius !important;
+      margin-top: -4px !important;
+    } 
+  }
+
+  
