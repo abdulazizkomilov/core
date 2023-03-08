@@ -31,7 +31,10 @@ INSTALLED_APPS = [
     'store',
     'users',
     'products',
+    'sorl.thumbnail',
 ]
+
+
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
