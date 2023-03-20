@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'store.views.for_all_pages',
                 'store.views.page_name',
+                'store.context_processors.cart',
             ],
         },
     },
@@ -133,6 +134,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
+
+CART_SESSION_ID = 'cart'
+SESSION_COOKIE_AGE = 86400
 
 LOGIN_REDIRECT_URL = 'store:accounts'
 LOGOUT_REDIRECT_URL = 'store:accounts'
