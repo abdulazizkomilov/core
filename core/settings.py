@@ -138,5 +138,6 @@ AUTH_USER_MODEL = 'users.CustomUser'
 CART_SESSION_ID = 'cart'
 SESSION_COOKIE_AGE = 86400
 
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'store:accounts'
 LOGOUT_REDIRECT_URL = 'store:accounts'
