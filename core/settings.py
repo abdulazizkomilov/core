@@ -137,3 +137,5 @@ SESSION_COOKIE_AGE = 86400
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'store:accounts'
 LOGOUT_REDIRECT_URL = 'store:accounts'
+
+AUTH_USER_MODEL = "users.CustomUser"
