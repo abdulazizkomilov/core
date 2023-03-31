@@ -1,5 +1,10 @@
 from django.forms import ModelForm
-from .models import Product, ProductImage
+from .models import Product, ProductImage, Order
+
+class OrderForm(ModelForm):
+    class Meta:
+        model = Order
+        fields = ('first_name', 'last_name', 'address', 'zipcode', 'city',)
 
 class ProductForm(ModelForm):
     class Meta:
