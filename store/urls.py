@@ -20,6 +20,7 @@ urlpatterns = [
     path('accounts/add-product-img/', add_product_img, name='add_product_img'),
     path('accounts/delete-product/<int:pk>/', delete_product, name='delete_product'),
     path('accounts/', accounts, name='accounts'),
+    path('accounts/order-detail/<int:pk>/', accounts_order_detail, name='accounts_order_detail'),
 ]
 
 
