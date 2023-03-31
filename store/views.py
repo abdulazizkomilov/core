@@ -147,11 +147,24 @@ def product_detail(request, slug):
 @login_required
 def accounts(request):
     products = request.user.products.exclude(status=Product.DELETED)
+    order_items = OrderItem.objects.filter(product__user=request.user)
 
     context = {
-        'products': products
+        'products': products,
+        'order_items': order_items,
     }
     return render(request, 'users/accounts.html', context)
+
+
+@login_required
+def accounts_order_detail(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+
+    context = {
+        'order': order,
+    }
+    return render(request, 'users/accounts_order_detail.html', context)
+
 
 @login_required
 def add_product(request):
