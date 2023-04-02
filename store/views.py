@@ -1,9 +1,14 @@
+import stripe
+import json
+
+from django.conf import settings
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import resolve
 from django.views import View
 from products.models import Product, Category, ProductImage, Order, OrderItem
 from django.db.models import Q
+from django.http import JsonResponse
 from products.forms import ProductForm, ImageForm, OrderForm
 from django.utils.text import slugify
 from django.contrib import messages
@@ -17,23 +22,26 @@ def add_to_cart(request, product_id):
 
     return redirect('store:cart_view')
 
+def success(request):
+    return render(request, 'product/success.html')
+
+def change_quantity(request, product_id):
+    action = request.GET.get('action', '')
+
+    if action:
+        quantity = 1
+
+        if action == 'decrease':
+            quantity = -1
+
+        cart = Cart(request)
+        cart.add(product_id, quantity, True)
+    
+    return redirect('store:cart_view')
+
 def remove_from_cart(request, product_id):
     cart = Cart(request)
     cart.remove(product_id)
-
-    return redirect('store:cart_view')
-
-def change_quantity(request, product_id):
-
-    action = request.GET.get('action', '')
-
-    quantity = 1
-
-    if action == 'decrease':
-        quantity =- 1
-    
-    cart = Cart(request)
-    cart.add(product_id, quantity, True)
 
     return redirect('store:cart_view')
 
@@ -47,23 +55,64 @@ def cart_view(request):
 
     return render(request, 'product/cart_view.html', context)
 
+
 @login_required
 def checkout(request):
     cart = Cart(request)
-    if request.method == 'POST':
-        form = OrderForm(request.POST)
 
-        if form.is_valid():
+    if cart.get_total_cost() == 0:
+        return redirect('cart_view')
+
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        first_name = data['first_name']
+        last_name = data['last_name']
+        address = data['address']
+        zipcode = data['zipcode']
+        city = data['city']
+
+        if first_name and last_name and address and zipcode and city:
+            form = OrderForm(request.POST)
+
             total_price = 0
+            items = []
 
             for item in cart:
                 product = item['product']
                 total_price += product.price * int(item['quantity'])
 
-            order = form.save(commit=False)
-            order.created_by = request.user
-            order.paid_amount = total_price
-            order.save()
+                items.append({
+                    'price_data': {
+                        'currency': 'usd',
+                        'product_data': {
+                            'name': product.title,
+                        },
+                        'unit_amount': product.price
+                    },
+                    'quantity': item['quantity']
+                })
+            
+            stripe.api_key = settings.STRIPE_SECRET_KEY
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=items,
+                mode='payment',
+                success_url=f'{settings.WEBSITE_URL}cart/success/',
+                cancel_url=f'{settings.WEBSITE_URL}cart/',
+            )
+            payment_intent = session.payment_intent
+
+            order = Order.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                address=address,
+                zipcode=zipcode,
+                city=city,
+                created_by = request.user,
+                is_paid = True,
+                payment_intent = payment_intent,
+                paid_amount = total_price
+            )
 
             for item in cart:
                 product = item['product']
@@ -73,14 +122,16 @@ def checkout(request):
                 item = OrderItem.objects.create(order=order, product=product, price=price, quantity=quantity)
 
             cart.clear()
-
-            return redirect('store:accounts')
+            messages.success(request, 'Your payment is successfully done. Thank you for shopping!')
+            
+            return JsonResponse({'session': session, 'order': payment_intent})
     else:
         form = OrderForm()
 
     context = {
         'cart': cart,
         'form': form,
+        'pub_key': settings.STRIPE_PUB_KEY,
     }
 
     return render(request, 'registration/checkout.html', context)
