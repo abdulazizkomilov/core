@@ -11,10 +11,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-5&3dcx=-v9&l9yb4=0@b!w_%&%=_k4u%vm=iya_4aj-rv8gkgk'
 
+STRIPE_PUB_KEY = 'pk_test_51MrvLrASHqKrpvFNBehFmvXQy700RBsqxDBf2oYOnq691hBOYQY3dTzpIk5J1DmYjzeCohtGyxCfBnbpkbopOWX9004sE7Rg8G'
+STRIPE_SECRET_KEY = 'sk_test_51MrvLrASHqKrpvFNnuQYTuiOqYS0ZXVvvQOeSJLKVGe6UDskUgub8e02HhieLLrx2ZcWlh7BKcLHgiAcIQo6ksNF00NbEQVN7E'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+WEBSITE_URL = 'http://127.0.0.1:8000/'
 
 
 # Application definition
@@ -137,3 +142,5 @@ SESSION_COOKIE_AGE = 86400
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'store:accounts'
 LOGOUT_REDIRECT_URL = 'store:accounts'
+
+
