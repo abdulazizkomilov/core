@@ -41,6 +41,15 @@ class Product(models.Model):
         (DELETED, 'Deleted'),
     )
 
+    
+    options_price = (
+        ('discount 75', 'Discount 75%'),
+        ('discount 50', 'Discount 50%'),
+        ('discount 35', 'Discount 35%'),
+        ('discount 10', 'Discount 10%'),
+    )
+
+
     user = models.ForeignKey(User, related_name='products', on_delete=models.CASCADE)
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
@@ -50,6 +59,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default=ACTIVE)
+    status_price = models.CharField(max_length=50, choices=options_price, default='Discount 10%')
 
     class Meta:
         ordering = ('-created_at',)
@@ -58,7 +68,7 @@ class Product(models.Model):
         return str(self.title)
 
     def get_display_price(self):
-        return self.price
+        return self.price / 100
     
 
 
@@ -75,19 +85,25 @@ class Order(models.Model):
     city = models.CharField(max_length=255)
     paid_amount = models.IntegerField(blank=True, null=True)
     is_paid = models.BooleanField(default=False)
-    merchant_id = models.CharField(max_length=255)
+    payment_intent = models.CharField(max_length=255, blank=True, null=True)
     created_by = models.ForeignKey(User, related_name='orders', on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{str(self.first_name)}"
+    
+    
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='items', on_delete=models.CASCADE)
     price = models.IntegerField()
     quantity = models.IntegerField(default=1)
-
+    
+    def get_display_price(self):
+        return self.price / 100
+    
     def __str__(self):
         return f"{str(self.order)} - {str(self.product)}"
+    
 
