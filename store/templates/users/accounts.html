@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+
+{% block title %}Account{% endblock title %}
+
+{% block content %}
+
+<section class="pt-3">
+    {% if request.user.userprofile.is_vendor %}
+    <div class="container">
+        <div class="row">
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success bg-success text-white d-flex align-items-center rounded-3 mb-3 alert-dismissible fade show"
+                role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <div class="col-lg-4 col-xl-3">
+                <div class="offcanvas-body p-3 p-lg-0">
+                    <div class="card bg-light w-100">
+
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h5>Identification</h5>
+                                <h6 class="mb-0">{{ request.user.get_full_name }}</h6>
+                                <a href="#" class="text-reset text-primary-hover small">{{ request.user.email }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-xl-9">
+
+                <div class="vstack gap-4">
+                    <div class="bg-light rounded p-3">
+                        <div class="bg-body rounded p-3 mt-3">
+                            <ul class="list-inline hstack flex-wrap gap-2 justify-content-between mb-0">
+                                <li class="h6 fw-normal mb-0">
+                                    <a href="#"><i class="bi bi-person fa-fw me-2 text-success"></i>My Profile</a>
+                                </li>
+                                <li class="h6 fw-normal mb-0">
+                                    <a href="{% url 'store:add_product' %}"
+                                        class="btn btn-sm btn-info-soft  text-warning mb-0"><i
+                                            class="bi bi-plus-circle-fill me-2"></i>Add Product</a>
+                                </li>
+                                <li class="h6 fw-normal mb-0">
+                                    <a href="{% url 'store:add_product_img' %}"
+                                        class="btn btn-sm btn-info-soft  text-warning mb-0"><i
+                                            class="bi bi-plus-circle-fill me-2"></i>Add Image For Product</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href=""><i class="bi bi-heart fa-fw me-2"></i>Wishlist</a>
+                                </li>
+                                <li class="h6 fw-normal mb-0 ms-3">
+                                    <a class="nav-link text-info text-danger bg-danger-soft-hover"
+                                        href="{% url 'logout' %}"><i class="bi bi-box-arrow-right me-2"></i>Sign Out</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+        {% if order_items %}
+        <div class="container mt-4">
+
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0">My orders</h3>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <h5 class="ms-3">Products</h5>
+                        <div class="table table-responsive">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Order ID</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Title</th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Price</th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Quantity</th>
+                                    </tr>
+                                </thead>
+                                {% for order_item in order_items %}
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <a href="{% url 'store:accounts_order_detail' order_item.order.id %}">
+                                                        <h6 class="mb-0 text-sm text-info">{{ order_item.order.id }}</h6>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-sm text-secondary mb-0">{{ order_item.product.title }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-sm text-secondary mb-0">${{ order_item.get_display_price }}</p>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-sm">{{ order_item.quantity }}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+
+    <div class="container mt-4">
+
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h3 class="mb-0">Edit products</h3>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            {% if products %}
+            {% for product in products %}
+            <div class="col-sm-6 col-xl-3">
+                <div class="card card-img-scale overflow-hidden bg-transparent">
+                    <div class="card-img-scale-wrapper rounded-3">
+                        {% if product.images.exists %}
+                        <img src="{{ product.images.all.first.image.url }}" class="card-img" alt="">
+                        {% else %}
+                        <img src="/static/images/element/07.jpg" class="card-img" alt="">
+                        {% endif %}
+                        <div class="position-absolute bottom-0 start-0 p-3">
+                            <div class="badge text-bg-light fs-8 rounded-pill stretched-link">
+                                {{ product.category }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body px-2">
+                        <h5 class="card-title"><a href="{% url 'store:edit_product' product.id %}"
+                                class="stretched-link">{{ product.title|title }}</a></h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="text-success mb-0">${{ product.get_display_price }}
+                                <small class="fw-light"> | {{ product.status }}</small>
+                            </h6>
+                            <h6 class="mb-0">4.5<i class="fa-solid fa-star text-warning ms-1"></i></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>Bush</p>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <div class="container">
+        <div class="row">
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success bg-success text-white d-flex align-items-center rounded-3 mb-3 alert-dismissible fade show"
+                role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <div class="col-lg-4 col-xl-3">
+                <div class="offcanvas-body p-3 p-lg-0">
+                    <div class="card bg-light w-100">
+
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h5>Identification</h5>
+                                <h6 class="mb-0">{{ request.user.get_full_name }}</h6>
+                                <a href="#" class="text-reset text-primary-hover small">{{ request.user.email }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-xl-9">
+
+                <div class="vstack gap-4">
+                    <div class="bg-light rounded p-3">
+                        <div class="bg-body rounded p-3 mt-3">
+                            <ul class="list-inline hstack flex-wrap gap-2 justify-content-between mb-0">
+                                <li class="h6 fw-normal mb-0">
+                                    <a href="#"><i class="bi bi-person fa-fw me-2 text-success"></i>My Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href=""><i class="bi bi-heart fa-fw me-2"></i>Wishlist</a>
+                                </li>
+                                <li class="h6 fw-normal mb-0 ms-3">
+                                    <a class="nav-link text-info text-danger bg-danger-soft-hover"
+                                        href="{% url 'logout' %}"><i class="bi bi-box-arrow-right me-2"></i>Sign Out</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}
