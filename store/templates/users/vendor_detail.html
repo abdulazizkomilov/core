@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}{% firstof user.get_full_name user.name %}{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h3 class="mb-0">{% firstof user.get_full_name user.name %}</h3>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% if products %}
+            {% for product in products %}
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card card-img-scale overflow-hidden bg-transparent">
+                        <div class="card-img-scale-wrapper rounded-3">
+                            {% if product.images.exists %}
+                            <img src="{{ product.images.all.first.image.url }}" class="card-img" alt="">
+                            {% else %}
+                            <img src="/static/images/element/07.jpg" class="card-img" alt="">
+                            {% endif %}
+                            <div class="position-absolute bottom-0 start-0 p-3">
+                                <div class="badge text-bg-light fs-8 rounded-pill stretched-link">
+                                    {{ product.category }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body px-2">
+                            <h5 class="card-title"><a href="{% url 'store:product_detail' product.slug %}" class="stretched-link">{{ product.title|title }}</a></h5>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="text-success mb-0">${{ product.get_display_price }}
+                                    <small class="fw-light"> | {{ product.user }}</small>
+                                </h6>
+                                <h6 class="mb-0">4.5<i class="fa-solid fa-star text-warning ms-1"></i></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Bush</p>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}
