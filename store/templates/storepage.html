@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Store{% endblock title %}
+
+{% block content %}
+
+<section class="bg-light">
+	<div class="container">
+		<div class="row g-4 align-items-center">
+			<!-- Title -->
+			<div class="col-lg-3">
+				<h2 class="mb-4 me-3">Product categories</h2>
+			</div>
+
+			<!-- Listing -->
+			<div  class="col-lg-8">
+				<div class="row g-4">
+					<!-- Card item -->
+					{% for category in categories_all %}
+					<div class="col-md-6">
+						<div class="card card-body h-100 p-3">
+							<div class="d-flex justify-content-between align-items-center">
+								<!-- Image and text -->
+								<div class="d-flex align-items-center">
+									<img src="{{ category.image.url }}" class="h-70px rounded-2" alt="">
+		
+									<div class="ms-3">
+										<h6 class="mb-0"><a href="#">{{ category.title|title }} <i class="bi bi-{{ category.options }}"></i></a></h6>
+										<span>{{ category.description|title|truncatewords:2 }}</span>
+									</div>
+								</div>
+								<!-- Button -->
+								<a href="{% url 'store:category' category.title %}" class="btn btn-primary-soft btn-round flex-shrink-0 ms-2 mb-0"><i class="bi bi-arrow-right"></i></a>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>	
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<section class="pt-0 pt-sm-5">
+	<div class="container">
+		<!-- Title -->
+		<div class="row mb-4 mb-sm-5">
+			<div class="col-12 text-center">
+				<h2 class="mb-0">Great places to Explore</h2>
+				<p class="mb-0">Book your hotel with us and don't forget to grab an awesome hotel deal to save massive on your stay.</p>
+			</div>	
+		</div>
+
+		<div class="row g-4">
+			{% for product in products %}
+			<!-- Card item -->
+			<div class="col-sm-6 col-lg-4 col-xl-3">
+				<div class="card shadow h-100">
+					<a href="{% url 'store:product_detail' product.slug %}">
+						<div class="position-relative">
+							{% if product.images.exists %}
+								<img src="{{ product.images.all.first.image.url }}" class="card-img-top" alt="">
+							{% else %}
+								<img src="/static/images/element/07.jpg" alt="">
+							{% endif %}
+							<div class="card-img-overlay p-3 z-index-1">
+								<div class="badge text-bg-dark"><i class="bi bi-{{ product.category.options }}"></i> <small>{{ product.category }}</small></div>
+								<div class="badge text-bg-success"><small>{{ product.status_price }}</small></div>
+							</div>
+						</div>
+					</a>
+
+					<!-- Card body START -->
+					<div class="card-body">
+						<!-- Title -->
+						<h5 class="card-title me-2"><a href="{% url 'store:product_detail' product.slug %}">{{ product.title }}</a></h5>
+
+						<!-- Address and Contact -->
+						<ul class="list-group list-group-borderless mb-0">
+							<li class="list-group-item small pb-0 text-primary">
+								$ {{ product.get_display_price }}
+							</li>
+							<li class="list-group-item small pb-0">
+								{{ product.description|truncatewords:3 }}
+							</li>
+						</ul>
+					</div>
+					<!-- Card body END -->
+
+					<!-- Card footer START-->
+					<div class="card-footer border-top">
+						<!-- Buttons -->
+						<div class="d-flex justify-content-between align-items-center">
+							<a href="{% url 'store:product_detail' product.slug %}" class="btn btn-link p-0 mb-0">View detail<i class="bi bi-arrow-right ms-1"></i></a>
+							<a href="{% url 'store:add_to_cart' product.id %}" class="h6 mb-0 z-index-2"><i class="bi bi-plus-circle-dotted"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+
+
+{% endblock %}
