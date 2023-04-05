@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Update Profile{% endblock title %}
+
+{% block content %}
+
+<section class="pt-3">
+	<div class="container">
+		<div class="row">
+
+			<div class="col-lg-4 col-xl-3">
+				<div class="offcanvas-lg offcanvas-end" tabindex="-1" id="offcanvasSidebar" >
+					<div class="offcanvas-header justify-content-end pb-2">
+						<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasSidebar" aria-label="Close"></button>
+					</div>
+					<div class="offcanvas-body p-3 p-lg-0">
+						<div class="card bg-light w-100">
+							<div class="card-body">
+								<img src="/static/images/element/07.jpg" class="rounded float-end"" alt="">
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-8 col-xl-9">
+				<div class="vstack gap-4">
+					<div class="card border">
+						<div class="card-header border-bottom">
+							<h4 class="card-header-title">Update Profile</h4>
+						</div>
+
+						<form class="card-body" method="post">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+
+                            <div class="text-end">
+								<button class="btn btn-primary mb-0" type="submit">Sign Up</button>
+							</div>
+                        </form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}
