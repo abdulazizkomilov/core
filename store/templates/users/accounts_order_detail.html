@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Order detail - {{ order.id }}{% endblock title %}
+
+{% block content %}
+
+<section class="pt-3">
+    <div class="container mt-4">
+
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h4 class="mb-0">Order detail - {{ order.created_by }} - {{ order.id }}</h4>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h5 class="ms-3">My products in this order</h5>
+                    <div class="table table-responsive">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Title</th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Price</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Quantity</th>
+                                </tr>
+                            </thead>
+                            {% for item in order.items.all %}
+                            {% if item.product.user == request.user %}
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm text-info">{{ item.product.title }}</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-sm text-secondary mb-0">${{ item.get_display_price }}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-sm">{{ item.quantity }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            {% endif %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
