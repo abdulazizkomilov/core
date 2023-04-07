@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block title %}Product Detail{% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="mb-4">Product Details</h5>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 text-center">
+                            {% if product.images.exists %}
+                            <img style="border-radius: 20px;" src="{{ product.images.all.first.image.url }}" alt="">
+                            {% else %}
+                            <img src="/static/images/element/07.jpg" alt="">
+                            {% endif %}
+                            <div class="my-gallery d-flex mt-4 pt-2" itemscope itemtype="">
+                                {% for image in product.images.all %}
+                                <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                    {% thumbnail image.image "800x800" format="PNG" upscale=False as thumb %}
+                                    <a href="{{ MEDIA_URL }}{{ thumb.url }}" itemprop="contentUrl" data-size="500x600">
+
+                                        <img style="border-radius: 10px;"
+                                            class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
+                                            src="{{ MEDIA_URL }}{{ thumb.url }}" width="{{ thumb.width }}"
+                                            height="{{ thumb.height }}" alt="{{ product.name }}">
+                                    </a>
+                                    {% endthumbnail %}
+                                </figure>
+                                {% endfor %}
+                            </div>
+
+                        </div>
+                        <div class="col-lg-5 mx-auto">
+                            <h3 class="mt-lg-0 mt-4">{{ product.title|title }}</h3>
+                            <div class="rating">
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star-half-alt" aria-hidden="true"></i>
+                            </div>
+                            <label class="mt-4">Vendor<a href="{% url 'users:vendor_detail' product.user.id %}"> {{ product.user }}</a></label>
+                            <br>
+                            <h6 class="mb-0 mt-3">Price</h6>
+                            <h5>${{ product.get_display_price }}</h5>
+                            <span class="badge badge-success">Discount buni qushish kk</span>
+                            <br>
+                            {% if product.description %}
+                            <label class="mt-4">Description</label>
+                            <ul>
+                                <li>
+                                    {{ product.description }}
+                                </li>
+                            </ul>
+                            {% endif %}
+                            <div class="row mt-4">
+                                <div class="col-lg-5 mt-lg-0 mt-2">
+                                    <label>Frame Material</label>
+                                    <select class="form-control" name="choices-material" id="choices-material">
+                                        <option value="Choice 1" selected="">Wood</option>
+                                        <option value="Choice 2">Steel</option>
+                                        <option value="Choice 3">Aluminium</option>
+                                        <option value="Choice 4">Carbon</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-5 mt-lg-0 mt-2">
+                                    <label>Color</label>
+                                    <select class="form-control" name="choices-colors" id="choices-colors">
+                                        <option value="Choice 1" selected="">White</option>
+                                        <option value="Choice 2">Gray</option>
+                                        <option value="Choice 3">Black</option>
+                                        <option value="Choice 4">Blue</option>
+                                        <option value="Choice 5">Red</option>
+                                        <option value="Choice 6">Pink</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label>Quantity</label>
+                                    <select class="form-control" name="choices-quantity" id="choices-quantity">
+                                        <option value="Choice 1" selected="">1</option>
+                                        <option value="Choice 2">2</option>
+                                        <option value="Choice 3">3</option>
+                                        <option value="Choice 4">4</option>
+                                        <option value="Choice 5">5</option>
+                                        <option value="Choice 6">6</option>
+                                        <option value="Choice 7">7</option>
+                                        <option value="Choice 8">8</option>
+                                        <option value="Choice 9">9</option>
+                                        <option value="Choice 10">10</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-lg-5">
+                                    <a href="{% url 'store:add_to_cart' product.id %}" type="button"
+                                        class="btn btn-warning">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <h5 class="ms-3">Other Products</h5>
+                            <div class="table table-responsive">
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Product</th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Price</th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Review</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Availability</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Id</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div>
+                                                        <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/black-chair.jpg"
+                                                            class="avatar avatar-md me-3" alt="table image">
+                                                    </div>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">Christopher Knight Home</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm text-secondary mb-0">$89.53</p>
+                                            </td>
+                                            <td>
+                                                <div class="rating ms-lg-n4">
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star-half-alt" aria-hidden="true"></i>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-sm">
+                                                <div class="progress mx-auto">
+                                                    <div class="progress-bar bg-gradient-success" role="progressbar"
+                                                        style="width: 80%" aria-valuenow="80" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-sm">230019</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div>
+                                                        <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-pink.jpg"
+                                                            class="avatar avatar-md me-3" alt="table image">
+                                                    </div>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">Bar Height Swivel Barstool</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm text-secondary mb-0">$99.99</p>
+                                            </td>
+                                            <td>
+                                                <div class="rating ms-lg-n4">
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-sm">
+                                                <div class="progress mx-auto">
+                                                    <div class="progress-bar bg-gradient-success" role="progressbar"
+                                                        style="width: 90%" aria-valuenow="90" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-sm">87120</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div>
+                                                        <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-steel.jpg"
+                                                            class="avatar avatar-md me-3" alt="table image">
+                                                    </div>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">Signature Design by Ashley</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm text-secondary mb-0">$129.00</p>
+                                            </td>
+                                            <td>
+                                                <div class="rating ms-lg-n4">
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star-half-alt" aria-hidden="true"></i>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-sm">
+                                                <div class="progress mx-auto">
+                                                    <div class="progress-bar bg-gradient-warning" role="progressbar"
+                                                        style="width: 60%" aria-valuenow="60" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-sm">412301</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div>
+                                                        <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-wood.jpg"
+                                                            class="avatar avatar-md me-3" alt="table image">
+                                                    </div>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">Modern Square</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm text-secondary mb-0">$59.99</p>
+                                            </td>
+                                            <td>
+                                                <div class="rating ms-lg-n4">
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                                    <i class="fas fa-star-half-alt" aria-hidden="true"></i>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-sm">
+                                                <div class="progress mx-auto">
+                                                    <div class="progress-bar bg-gradient-warning" role="progressbar"
+                                                        style="width: 40%" aria-valuenow="40" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-sm">001992</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
