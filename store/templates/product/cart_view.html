@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Cart{% endblock title %}
+
+
+{% block content %}
+
+<div class="container-fluid px-lg-5" tabindex="-1">
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success bg-success text-white d-flex align-items-center rounded-3 mb-3 alert-dismissible fade show"
+            role="alert">
+            <h5>{{ message }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    {% endif %}
+    <div class="offcanvas-header">
+        <div class="text-start">
+            <h5 id="offcanvasRightLabel" class="mb-2 fs-4">Shop Cart</h5>
+            {% if cart %}
+            <b>Total cost: {{ cart.get_total_cost }}</b>
+            {% endif %}
+        </div>
+    </div>
+    <div class="container-fluid px-lg-5 mb-3 mt-3">
+
+        <div class="">
+            <ul class="list-group list-group-flush">
+
+                {% if cart %}
+                {% for item in cart %}
+                <!-- list group -->
+                <li class="list-group-item py-3 ps-0 border-top">
+                    <!-- row -->
+                    <div class="row align-items-center">
+                        <div class="col-3 col-md-2">
+                            <img src="{{ item.product.images.all.first.image.url }}" alt=""
+                                class="img-fluid">
+                        </div>
+                        <div class="col-4 col-md-6 col-lg-5" style="display: inline-block;">
+                            <!-- title -->
+                            <a href="../pages/shop-single.html" class="text-inherit" style="display: inline-block;">
+                                <h6 class="mb-0">{{ item.product.title|title }}</h6>
+                            </a>
+                            <!-- text -->
+                            <div class="col-2 col-md-2">
+                                <span class="fw-bold">${{ item.product.get_display_price }}</span>
+                            </div>
+                            <div class="mt-2 small lh-1" style="display: inline-block;"> <a href="{% url 'store:remove_from_cart' item.product.id %}" class="text-decoration-none text-inherit"> 
+                                <span class="me-1 align-text-bottom">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-trash-2 text-success">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path
+                                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                            </path>
+                                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                                            <line x1="14" y1="11" x2="14" y2="17"></line> </svg>
+                                </span></a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-5 col-md-3 p-2 col-lg-3">
+                            <div class="input-group input-spinner">
+                                <div><a class="badge rounded-pill bg-info" href="{% url 'store:change_quantity' item.product.id %}?action=increase">+</a></div>
+                                <span class="ms-2 me-2">{{ item.quantity }}</span>
+                                <div><a class="badge rounded-pill bg-info" href="{% url 'store:change_quantity' item.product.id %}?action=decrease">-</a></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+                {% endfor %}
+                {% else %}
+                <h4>Your cart is empty, please continue shopping!</h4>
+                {% endif %}
+
+            </ul>
+            <!-- btn -->
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'store:store' %}" class="btn btn-primary">Continue Shopping</a>
+                <a href="{% url 'store:checkout' %}" class="btn btn-dark">Checkout</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
