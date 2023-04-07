@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Checkout{% endblock title %}
+
+
+{% block content %}
+
+<div class="container-fluid px-lg-5" tabindex="-1">
+    <div class="offcanvas-header">
+        <div class="text-start">
+            <h5 id="offcanvasRightLabel" class="mb-2 fs-4">Checkout</h5>
+        </div>
+    </div>
+    <div class="container-fluid px-lg-5 mb-3 mt-3">
+
+        <div class="">
+            <h4>Checkout</h4>
+
+            <p>Total cost: ${{ cart.get_total_cost }}</p>
+
+            <form method="post" action="." class="row g-3">
+                {% csrf_token %}
+                
+                {{ form|crispy }}
+
+                <div id="errors" class="hidden bg-info text-white bg-success text-white d-flex align-items-center rounded-3 mb-3"></div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'store:store' %}" class="btn btn-primary">Continue Shopping</a>
+                    <button class="btn btn-info mb-0" onclick="buy(event)">Checkout</button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="application/javascript" src="https://js.stripe.com/v3/"></script>
+<script>
+    function validate(first_name, last_name, address, zipcode, city) {
+        let errors = [];
+
+        if (first_name == '') {
+            errors.push('The first name is missing');
+        }
+
+        if (last_name == '') {
+            errors.push('The last name is missing');
+        }
+
+        if (address == '') {
+            errors.push('The address is missing');
+        }
+
+        if (zipcode == '') {
+            errors.push('The zipcode is missing');
+        }
+
+        if (city == '') {
+            errors.push('The city is missing');
+        }
+
+        let html = '';
+
+        for (let i = 0; i < errors.length; i++) {
+            html += errors[i] + '<br>';
+        }
+
+        let errorsElement = document.getElementById('errors');
+    
+        if (errors.length) {
+            errorsElement.classList.remove('hidden');
+            errorsElement.innerHTML = html;
+
+            return false;
+        } else {
+            errorsElement.classList.add('hidden');
+
+            return true;
+        }
+    }
+
+    function buy(event) {
+        event.preventDefault();
+
+        const first_name = document.getElementById('id_first_name').value;
+        const last_name = document.getElementById('id_last_name').value;
+        const address = document.getElementById('id_address').value;
+        const zipcode = document.getElementById('id_zipcode').value;
+        const city = document.getElementById('id_city').value;
+
+        if (validate(first_name, last_name, address, zipcode, city)) {
+            let data = {
+                'first_name': first_name,
+                'last_name': last_name,
+                'address': address,
+                'zipcode': zipcode,
+                'city': city,
+            }
+
+            let stripe = Stripe('{{ pub_key }}');
+
+            fetch('/cart/checkout/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify(data)
+            })
+            .then(function(response) {
+                return response.json()
+            })
+            .then(function(session) {
+                return stripe.redirectToCheckout({ sessionId: session.session.id })
+            })
+            .then(function(result) {
+                if (result.error) {
+                    alert(result.error.message)
+                }
+            })
+            .catch(function(error) {
+                alert(error)
+            });
+        }
+
+        return false;
+    }
+</script>
+{% endblock %}
