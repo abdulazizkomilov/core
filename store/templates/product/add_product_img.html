@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add Image{% endblock title %}
+
+{% block content %}
+
+<section class="pt-3">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-xl-12 mt-3">
+                <div class="card border">
+                    <div class="card-header border-bottom">
+                        <h4 class="card-header-title">{{ title }}</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <form method="post" action="." enctype="multipart/form-data" class="row g-3">
+                            {% csrf_token %}
+                            
+                            {{ form_img|crispy }}
+                            <div class="col-12 text-end">
+                                <button class="btn btn-primary mb-0" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
