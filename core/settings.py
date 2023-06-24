@@ -17,9 +17,9 @@ STRIPE_SECRET_KEY = 'sk_test_51MrvLrASHqKrpvFNnuQYTuiOqYS0ZXVvvQOeSJLKVGe6UDskUg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['store-uz.up.railway.app', '127.0.0.1',]
 
-WEBSITE_URL = 'http://127.0.0.1:8000/'
+WEBSITE_URL = 'http://store-uz.up.railway.app'
 
 
 # Application definition
@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',  
     "crispy_forms",
     "crispy_bootstrap5",
     'store',
@@ -39,7 +40,11 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
 ]
 
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://store-uz.up.railway.app',
+    'http://store-uz.up.railway.app',
+    'http://127:0.0.1:8000',
+]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
@@ -47,6 +52,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -60,7 +66,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,10 +88,15 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'qocYArmyXq8h0vcSgTm8',
+        'HOST': 'containers-us-west-199.railway.app',
+        'PORT': '6536',
     }
 }
 
@@ -114,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
@@ -124,9 +135,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [str(BASE_DIR.joinpath('static')),]
-STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
@@ -142,5 +153,20 @@ SESSION_COOKIE_AGE = 86400
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'store:accounts'
 LOGOUT_REDIRECT_URL = 'store:accounts'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'abdulazizkomilov2001@gmail.com'
+# EMAIL_HOST_PASSWORD = '6066066aA'
+
+# # Allauth settings
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+# ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+# ACCOUNT_EMAIL_SUBJECT_PREFIX = '[My Site] '
+# ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
+
 
 

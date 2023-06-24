@@ -1,0 +1,471 @@
+{% load static %}
+
+<html lang="en">
+    <head>
+        <title>{% block title %}{% endblock title %} | Booking</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="author" content="Webestica.com">
+        <meta name="description" content="Booking - Multipurpose Online Booking Theme">
+
+        <script>
+            const storedTheme = localStorage.getItem('theme')
+
+            const getPreferredTheme = () => {
+                if (storedTheme) {
+                    return storedTheme
+                }
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+            }
+
+            const setTheme = function (theme) {
+                if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-bs-theme', 'dark')
+                } else {
+                    document.documentElement.setAttribute('data-bs-theme', theme)
+                }
+            }
+
+            setTheme(getPreferredTheme())
+
+            window.addEventListener('DOMContentLoaded', () => {
+                var el = document.querySelector('.theme-icon-active');
+                if (el != 'undefined' && el != null) {
+                    const showActiveTheme = theme => {
+                        const activeThemeIcon = document.querySelector('.theme-icon-active use')
+                        const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+                        const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+
+                        document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+                            element.classList.remove('active')
+                        })
+
+                        btnToActive.classList.add('active')
+                        activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+                    }
+
+                    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                        if (storedTheme !== 'light' || storedTheme !== 'dark') {
+                            setTheme(getPreferredTheme())
+                        }
+                    })
+
+                    showActiveTheme(getPreferredTheme())
+
+                    document.querySelectorAll('[data-bs-theme-value]')
+                        .forEach(toggle => {
+                            toggle.addEventListener('click', () => {
+                                const theme = toggle.getAttribute('data-bs-theme-value')
+                                localStorage.setItem('theme', theme)
+                                setTheme(theme)
+                                showActiveTheme(theme)
+                            })
+                        })
+
+                }
+            })
+
+        </script>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
+
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/font-awesome/all.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/tiny-slider/tiny-slider.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/glighbox/glightbox.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/flatpickr/flatpickr.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/choices/choices.min.css' %}">
+
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style2.css' %}">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+
+    </head>
+
+    <body class="has-navbar-mobile">
+        {% comment %}
+        <div class="alert alert-warning py-2 m-0 bg-primary border-0 rounded-0 alert-dismissible fade show text-center overflow-hidden" role="alert">
+            <p class="text-white m-0">Traveling internationally? Get update information on COVID-19<a href="#" class="btn btn-xs btn-dark ms-2 mb-0">Learn more!</a></p>
+            <!-- Close button -->
+            <button type="button" class="btn-close btn-close-white opacity-9 p-3" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endcomment %}
+
+        <header class="navbar-light header-sticky">
+            <nav class="navbar navbar-expand-xl">
+                <div class="container">
+                    <a class="navbar-brand" href="{% url 'store:home' %}">
+                        <img class="light-mode-item navbar-brand-item" src="/static/images/a-logo.png" alt="logo">
+                        <img class="dark-mode-item navbar-brand-item" src="/static/images/a-logo.png" alt="logo">
+                    </a>
+
+                    <button class="navbar-toggler ms-auto ms-sm-0 p-0 p-sm-2" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-animation">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                        <span class="d-none d-sm-inline-block small">Menu</span>
+                    </button>
+
+
+                    <div class="navbar-collapse collapse" id="navbarCollapse">
+                        <ul class="navbar-nav navbar-nav-scroll me-auto">
+                            
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" id="accounntMenu" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">Categories <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                    </svg></a>
+                                <ul class="dropdown-menu" aria-labelledby="accounntMenu">
+                                    
+                                    
+                                    <li class="dropdown-submenu dropend">
+                                        <a class="dropdown-item" href="#">Store <i class="bi bi-arrow-right-short"></i></a>
+                                        <ul class="dropdown-menu" data-bs-popper="none">
+                                            {% for c in categories %}
+                                            <li>
+                                                <a class="dropdown-item" href="{% url 'store:category' c.title %}">
+                                                    <i class="bi bi-box-arrow-in-right me-2"></i>{{ c.title }}
+                                                </a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+
+                                    <li> <a class="dropdown-item" href="">Master Admin</a> </li>
+                                
+                                </ul>
+                            </li>
+                            
+                        </ul>
+                        <form class="d-flex p-3" method="get" action="/search/" role="search">
+                            <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success mt-1" type="submit"><i class="bi bi-search"></i></button>
+                        </form>
+                    </div>
+
+                
+                    <div class="navbar-collapse collapse" id="navbarCategoryCollapse">
+                        <ul class="navbar-nav navbar-nav-scroll nav-pills-primary-soft text-center ms-auto p-2 p-xl-0">
+                            <!-- Nav item Home -->
+                            <li class="nav-item"> <a class="nav-link {% if url_name == 'home' %}active{% endif %}" href="{% url 'store:home' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-amd" viewBox="0 0 16 16">
+                                    <path d="m.334 0 4.358 4.359h7.15v7.15l4.358 4.358V0H.334ZM.2 9.72l4.487-4.488v6.281h6.28L6.48 16H.2V9.72Z"/>
+                                </svg> Home</a> </li>
+                            
+                            
+                            <!-- Nav item Store -->
+                            <li class="nav-item"> <a class="nav-link {% if url_name == 'store' %}active{% endif %}" href="{% url 'store:store' %}">
+                                <i class="bi bi-shop-window"></i> Store</a> </li>
+
+                            <li class="nav-item"> <a class="nav-link {% if url_name == 'accounts' %}active{% endif %}" href="{% url 'store:accounts' %}">
+                                <i class="bi bi-person-fill-lock"></i> Account</a> </li>
+                    
+
+                            {% if request.user.is_authenticated %}
+                            <li class="nav-item dropdown">
+                                <!-- Avatar -->
+                                <a class="avatar avatar-sm p-0" href="#" id="profileDropdown" role="button"
+                                    data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <img class="avatar-img rounded-2" src="/media/avatars/default.png" alt="">
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3"
+                                    aria-labelledby="profileDropdown">
+                                    <!-- Profile info -->
+                                    <li class="px-3 mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <!-- Avatar -->
+                                            <div class="avatar me-3">
+                                                <img class="avatar-img rounded-circle shadow" src="/media/avatars/default.png"
+                                                    alt="">
+                                            </div>
+                                            <div>
+                                                <a class="h6 mt-2 mt-sm-0" href="{% url 'store:accounts' %}">{{ request.user.get_full_name }}</a>
+                                                <p class="small m-0">{{ request.user.email }}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Links -->
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark-check fa-fw me-2"></i>My
+                                            Bookings</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-heart fa-fw me-2"></i>My Wishlist</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-gear fa-fw me-2"></i>Settings</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-info-circle fa-fw me-2"></i>Help
+                                            Center</a></li>
+                                    <li><a class="dropdown-item bg-danger-soft-hover" href="{% url 'logout' %}"><i
+                                                class="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
+                                </ul>
+                            </li>
+                            {% else %}
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link active" href="" id="advanceMenu" data-bs-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Sign In
+                                    </a>
+                                    <ul class="dropdown-menu min-w-auto" data-bs-popper="none">
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'login' %}">
+                                                <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'users:signup' %}">
+                                                <i class="bi bi-person-plus-fill me-2"></i>Sign Up
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+
+                            {% if url_name == 'store' or url_name == 'cart_view' %}
+                            <li class="nav-item dropdown">
+                                <!-- Notification button -->
+                                <a class="nav-notification btn btn-light p-0 mb-0 {% if url_name == 'cart_view' %}active{% endif %}" href="{% url 'store:cart_view' %}" role="button">
+                                <i class="bi bi-cart-check-fill"></i>
+                                </a>
+                                <!-- Notification dote -->
+                                <span class="position-absolute mt-2 translate-middle badge rounded-pill bg-danger">
+                                    {{ cart|length }}
+                                    <span class="visually-hidden">items</span>
+                                </span>
+                            </li>
+                            {% endif %}
+
+                            <li class="nav-item dropdown ms-4" href="{% url 'store:cart_view' %}">
+                                <button class="nav-notification btn btn-dark active lh-0 p-0 mb-0" id="bd-theme"
+                                type="button"
+                                aria-expanded="false"
+                                data-bs-toggle="dropdown"
+                                data-bs-display="static">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half fa-fw theme-icon-active" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+                                        <use href="#"></use>
+                                    </svg>
+                                </button>
+                            
+                                <ul class="dropdown-menu min-w-auto dropdown-menu-end" aria-labelledby="bd-theme">
+                                    <li class="mb-1">
+                                        <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light">
+                                            <svg width="16" height="16" fill="currentColor" class="bi bi-brightness-high-fill fa-fw mode-switch me-1" viewBox="0 0 16 16">
+                                                <path d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                                                <use href="#"></use>
+                                            </svg>
+                                            light
+                                        </button>
+                                    </li>
+                                    <li class="mb-1">
+                                        <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-stars-fill fa-fw mode-switch me-1" viewBox="0 0 16 16">
+                                                <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+                                                <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+                                                <use href="#"></use>
+                                            </svg>dark
+                                        </button>
+                                    </li>
+                                </ul>
+                            </li>
+
+                        
+                    </div>
+
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <footer class="bg-dark pt-5">
+            <div class="container">
+                <div class="row g-4">
+
+                    <div class="col-lg-3">
+                        <!-- logo -->
+                        <a href="/">
+                            <img class="h-40px" src="{% static 'images/a-logo.png' %}" alt="logo">
+                        </a>
+                        <p class="my-3 text-muted">Departure defective arranging rapturous did believe him all had
+                            supported.</p>
+                        <p class="mb-2"><a href="#" class="text-muted text-primary-hover"><i
+                                    class="bi bi-telephone me-2"></i>+998 93 115 99 63</a> </p>
+                        <p class="mb-0"><a href="#" class="text-muted text-primary-hover"><i
+                                    class="bi bi-envelope me-2"></i>abdulaziz.komilov2@icloud.com</a></p>
+                    </div>
+                    <!-- Widget 1 END -->
+
+                    <!-- Widget 2 START -->
+                    <div class="col-lg-8 ms-auto">
+                        <div class="row g-4">
+                            <!-- Link block -->
+                            <div class="col-6 col-md-3">
+                                <h5 class="text-white mb-2 mb-md-4">Page</h5>
+                                <ul class="nav flex-column text-primary-hover">
+                                    <li class="nav-item"><a class="nav-link text-muted" href="#">About us</a></li>
+                                    <li class="nav-item"><a class="nav-link text-muted" href="#">Contact us</a></li>
+                                    <li class="nav-item"><a class="nav-link text-muted" href="#">News and Blog</a></li>
+                                    <li class="nav-item"><a class="nav-link text-muted" href="#">Meet a Team</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Link block -->
+                            <div class="col-6 col-md-3">
+                                <h5 class="text-white mb-2 mb-md-4">Link</h5>
+                                <ul class="nav flex-column text-primary-hover">
+                                    <li class="nav-item"><a class="nav-link text-muted" href="#">Privacy Policy</a></li>
+                                    <li class="nav-item"><a class="nav-link text-muted" href="#">Terms</a></li>
+                                    <li class="nav-item"><a class="nav-link text-muted" href="#">Cookie</a></li>
+                                    <li class="nav-item"><a class="nav-link text-muted" href="#">Support</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Link block -->
+                            <div class="col-6 col-md-3">
+                                <h5 class="text-white mb-2 mb-md-4">Global Site</h5>
+                                <ul class="nav flex-column text-primary-hover">
+                                    <li class="nav-item"><a class="nav-link text-muted" href="#">India</a></li>
+                                    <li class="nav-item"><a class="nav-link text-muted" href="#">California</a></li>
+                                    <li class="nav-item"><a class="nav-link text-muted" href="#">Indonesia</a></li>
+                                    <li class="nav-item"><a class="nav-link text-muted" href="#">Canada</a></li>
+                                    <li class="nav-item"><a class="nav-link text-muted" href="#">Malaysia</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Widget 2 END -->
+
+                </div><!-- Row END -->
+
+            
+                <!-- Payment and card -->
+                <div class="row g-4 justify-content-between mt-0 mt-md-2">
+
+                    <!-- Social media icon -->
+                    <div class="col-sm-5 col-md-6 col-lg-3 text-sm-end">
+                        <h5 class="text-white mb-2">Follow us on</h5>
+                        <ul class="list-inline mb-0 mt-3">
+                            <li class="list-inline-item"> <a class="btn btn-sm px-2 bg-facebook mb-0" href="#"><i
+                                        class="fab fa-fw fa-facebook-f"></i></a> </li>
+                            <li class="list-inline-item"> <a class="btn btn-sm shadow px-2 bg-instagram mb-0" href="#"><i
+                                        class="fab fa-fw fa-instagram"></i></a> </li>
+                            <li class="list-inline-item"> <a class="btn btn-sm shadow px-2 bg-twitter mb-0" href="#"><i
+                                        class="fab fa-fw fa-twitter"></i></a> </li>
+                            <li class="list-inline-item"> <a class="btn btn-sm shadow px-2 bg-linkedin mb-0" href="#"><i
+                                        class="fab fa-fw fa-linkedin-in"></i></a> </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <hr class="mt-4 mb-0">
+
+                <!-- Bottom footer -->
+                <div class="row">
+                    <div class="container">
+                        <div class="d-lg-flex justify-content-between align-items-center py-3 text-center text-lg-start">
+                            <!-- copyright text -->
+                            <div class="text-muted text-primary-hover"> Copyrights ©2023 Abdulaziz. Build by <a
+                                    href="https://www.webestica.com/" class="text-muted">Abdulaziz Komilov</a>. </div>
+                            <!-- copyright links-->
+                            <div class="nav mt-2 mt-lg-0">
+                                <ul class="list-inline text-primary-hover mx-auto mb-0">
+                                    <li class="list-inline-item me-0"><a class="nav-link py-1 text-muted" href="#">Privacy
+                                            policy</a></li>
+                                    <li class="list-inline-item me-0"><a class="nav-link py-1 text-muted" href="#">Terms and
+                                            conditions</a></li>
+                                    <li class="list-inline-item me-0"><a class="nav-link py-1 text-muted pe-0"
+                                            href="#">Refund policy</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+        <div class="navbar navbar-mobile">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link {% if url_name == 'home' %}active{% endif %}" href="{% url 'store:home' %}"><i class="bi bi-amd"></i>
+                        <span class="mb-0 nav-text">Home</span>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link {% if url_name == 'store' %}active{% endif %}" href="{% url 'store:store' %}"><i class="bi bi-cart-check-fill"></i>
+                        <span class="mb-0 nav-text">Do`kon</span>
+                    </a>
+                </li>
+
+                {% if url_name == 'store' or url_name == 'cart_view' %}
+                    <li class="nav-item">
+                        <a class="nav-notification btn btn-light p-0 mb-0 {% if url_name == 'cart_view' %}active{% endif %}" href="{% url 'store:cart_view' %}" role="button"
+                        aria-expanded="false" data-bs-auto-close="outside">
+                        <i class="bi bi-cart-check-fill"></i>
+                        </a>
+                        <span class="position-absolute mt-2 translate-middle badge rounded-pill bg-danger">
+                            {{ cart|length }}
+                            <span class="visually-hidden">items</span>
+                        </span>
+                    </li>
+                {% endif %}
+
+
+                <li class="nav-item">
+                    <a class="nav-link {% if url_name == 'accounts' %}active{% endif %}" href="{% url 'store:accounts' %}"><i class="bi bi-person-circle fa-fw"></i>
+                        <span class="mb-0 nav-text">Account</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        {% block scripts %}
+        {% endblock %}
+        
+        <!-- Bootstrap JS -->
+        <script src="https://kit.fontawesome.com/66e022e63d.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+        <script src="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}"></script>
+        
+        <!-- Vendors -->
+        <script src="{% static 'vendor/choices/choices.min.js' %}"></script>
+        <script src="{% static 'vendor/flatpickr/flatpickr.min.js' %}"></script>
+        <script src="{% static 'vendor/glighbox/glightbox.js' %}"></script>
+        <script src="{% static 'vendor/tiny-slider/tiny-slider.js' %}"></script>
+
+        <!-- ThemeFunctions -->
+        <script src="{% static 'js/functions.js' %}"></script>
+
+    </body>
+</html>
