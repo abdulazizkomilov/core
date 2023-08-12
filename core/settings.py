@@ -15,7 +15,7 @@ STRIPE_PUB_KEY = 'pk_test_51MrvLrASHqKrpvFNBehFmvXQy700RBsqxDBf2oYOnq691hBOYQY3d
 STRIPE_SECRET_KEY = 'sk_test_51MrvLrASHqKrpvFNnuQYTuiOqYS0ZXVvvQOeSJLKVGe6UDskUgub8e02HhieLLrx2ZcWlh7BKcLHgiAcIQo6ksNF00NbEQVN7E'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['store-uz.up.railway.app', '127.0.0.1',]
 
