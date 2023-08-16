@@ -19,7 +19,7 @@ STRIPE_SECRET_KEY = 'sk_test_51MrvLrASHqKrpvFNnuQYTuiOqYS0ZXVvvQOeSJLKVGe6UDskUg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['store-uz.onrender.com', '127.0.0.1:8000']
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
@@ -48,8 +48,8 @@ INSTALLED_APPS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://store-uz.up.railway.app',
-    'http://store-uz.up.railway.app',
+    'https://store-uz.onrender.com',
+    'http://store-uz.onrender.com',
     'http://127:0.0.1:8000',
 ]
 
@@ -110,7 +110,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Feel free to alter this value to suit your needs.
-        default='postgresql://postgres:postgres@localhost:5432/mysite',
+        default='postgres://abdulaziz:FsMKrHns3OVAZO37mQJQRfo7FDQsy1Wr@dpg-cjecqsrbq8nc73d2chtg-a/dbblog_qezn',
         conn_max_age=600
     )
 }
