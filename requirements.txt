@@ -103,7 +103,6 @@ python-dateutil
 python-decouple
 python-dotenv
 python3-openid
-python
 pytz
 PyYAML
 requests
