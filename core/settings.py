@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -9,17 +11,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5&3dcx=-v9&l9yb4=0@b!w_%&%=_k4u%vm=iya_4aj-rv8gkgk'
+SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 
 STRIPE_PUB_KEY = 'pk_test_51MrvLrASHqKrpvFNBehFmvXQy700RBsqxDBf2oYOnq691hBOYQY3dTzpIk5J1DmYjzeCohtGyxCfBnbpkbopOWX9004sE7Rg8G'
 STRIPE_SECRET_KEY = 'sk_test_51MrvLrASHqKrpvFNnuQYTuiOqYS0ZXVvvQOeSJLKVGe6UDskUgub8e02HhieLLrx2ZcWlh7BKcLHgiAcIQo6ksNF00NbEQVN7E'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = ['store-uz.up.railway.app', '127.0.0.1',]
+ALLOWED_HOSTS = []
 
-WEBSITE_URL = 'http://store-uz.up.railway.app'
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+
+WEBSITE_URL = RENDER_EXTERNAL_HOSTNAME
 
 
 # Application definition
@@ -31,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'whitenoise.runserver_nostatic',  
+    'whitenoise.runserver_nostatic',
     "crispy_forms",
     "crispy_bootstrap5",
     'store',
@@ -89,15 +96,23 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'qocYArmyXq8h0vcSgTm8',
+#         'HOST': 'containers-us-west-199.railway.app',
+#         'PORT': '6536',
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'qocYArmyXq8h0vcSgTm8',
-        'HOST': 'containers-us-west-199.railway.app',
-        'PORT': '6536',
-    }
+    'default': dj_database_url.config(
+        # Feel free to alter this value to suit your needs.
+        default='postgresql://postgres:postgres@localhost:5432/mysite',
+        conn_max_age=600
+    )
 }
 
 
@@ -137,10 +152,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -167,6 +182,3 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 # ACCOUNT_EMAIL_SUBJECT_PREFIX = '[My Site] '
 # ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
-
-
-
