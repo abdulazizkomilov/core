@@ -93,7 +93,6 @@ opencv-python
 openpyxl
 packaging
 Pillow
-pip==23.2.1
 promise
 psycopg2-binary
 pycodestyle
